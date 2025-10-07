@@ -1,0 +1,36 @@
+<?= $this->extend('Layouts/mainbody') ?>
+<?= $this->section('content') ?>
+
+<div class="container col-12">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8 col-12">
+            <h1>Bienvenido al sistema de gestión de inventario Telma ERP.</h1>
+        </div>
+        <div class="col-md-4 col-12 d-flex justify-content-md-end justify-content-center">
+            <div class="card mb-3" style="max-width: 300px;">
+                <div class="card-body text-center">
+                    <h6 class="card-title">Estado de Caja</h6>
+                    <p class="card-text display-6" id="cashStatus">$0.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <a href='ventas/new' class="btn btn-primary">
+            <i class="fa-solid fa-pen-to-square"></i> Crear nuevo
+        </a>
+    </div>
+
+    <table class="table table-striped table-hover table-bordered">
+        <tr class='text-center'>
+            <th class="col-sm-1">#</th>
+            <th class="col-sm-5">Cliente</th>
+            <th class="col-sm-2">Valor</th>
+            <th class="col-sm-2">Tipo de pago</th>
+            <th class="col-sm-2">Acciones</th>
+        </tr>
+    </table>
+</div>
+
+<?= $this->endSection() ?>
