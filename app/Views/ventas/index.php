@@ -9,7 +9,7 @@
         <th>Titulo</th>
         <th>Comentarios</th>
         <th>Categoria</th>
-        <th class="col-sm-3">Acciones</th>
+        <th class="col-sm-3">Accion</th>
     </tr>
     <?php foreach ($peliculas as $pelicula): ?>
         <tr>
