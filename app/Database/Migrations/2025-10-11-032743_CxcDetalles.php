@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CxcPagos extends Migration
+class CxcDetalles extends Migration
 {
     public function up()
     {
@@ -18,11 +18,7 @@ class CxcPagos extends Migration
             'factura_id'       => [
                 'type'       => 'INT',
                 'constraint' => 11,
-            ],
-            'factura_total'       => [
-                'type'       => 'DECIMAL',
-                'constraint' => '10,2',
-                'default'=> '0.00',
+                'unsigned' => true,
             ],
             'pago_fecha'       => [
                 'type'       => 'DATE',
@@ -47,12 +43,11 @@ class CxcPagos extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('factura_id', 'fact_cabeceras', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('factura_total', 'fact_cabeceras', 'total', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('cxc_pagos');
+        $this->forge->createTable('cxc_detalles');
     }
 
     public function down()
     {
-        $this->forge->dropTable('cxc_pagos');
+        $this->forge->dropTable('cxc_detalles');
     }
 }

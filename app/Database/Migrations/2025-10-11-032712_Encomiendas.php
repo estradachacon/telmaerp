@@ -25,8 +25,9 @@ class Encomiendas extends Migration
                 'constraint' => '255',
             ],
             'pago_de_encomienda'       => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
+                'type'       => 'DECIMAL',
+                'constraint' => '10,2',
+                'default'=> '0.00',
             ],
             "encomienda_estatus" => [
                 "type" => "ENUM",

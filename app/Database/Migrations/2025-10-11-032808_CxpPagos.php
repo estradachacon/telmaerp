@@ -18,13 +18,9 @@ class CxpPagos extends Migration
             'compra_id' => [
                 'type'       => 'INT',
                 'constraint' => 11,
+                'unsigned'   => true,
             ],
-            'compra_monto' => [
-                'type'       => 'DECIMAL',
-                'constraint' => '10,2',
-                'default'=> '0.00',
-            ],
-            'monto_pagado' => [
+            'monto_pago_cxp' => [
                 'type'       => 'DECIMAL',
                 'constraint' => '10,2',
                 'default'=> '0.00',
@@ -52,7 +48,6 @@ class CxpPagos extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('compra_id', 'compras', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('compra_monto', 'compras', 'total_compra', 'CASCADE', 'CASCADE');
         $this->forge->createTable('cxp_pagos');
     }
 

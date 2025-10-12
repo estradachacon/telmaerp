@@ -18,10 +18,12 @@ class FactDetalles extends Migration
             'fact_cabecera_id'       => [
                 'type'       => 'INT',
                 'constraint' => 11,
+                'unsigned' => true,
             ],
             'producto_id'       => [
                 'type'       => 'INT',
                 'constraint' => 11,
+                'unsigned' => true,
             ],
             'cantidad'       => [
                 'type'       => 'INT',

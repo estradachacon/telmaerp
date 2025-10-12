@@ -18,10 +18,12 @@ class ComprasDetalles extends Migration
             'compra_id'       => [
                 'type'       => 'INT',
                 'constraint' => 11,
+                'unsigned'   => true,
             ],
             'producto_id'       => [
                 'type'       => 'INT',
                 'constraint' => 11,
+                'unsigned'   => true,
             ],
             'cantidad'       => [
                 'type'       => 'INT',
@@ -48,9 +50,9 @@ class ComprasDetalles extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('compra_id', 'compras', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('producto_id', 'productos', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addKey('compra_id', true);
+        $this->forge->addForeignKey('compra_id', 'compras', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('compras_detalles');
     }
 
     public function down()

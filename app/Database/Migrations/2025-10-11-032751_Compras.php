@@ -21,6 +21,7 @@ class Compras extends Migration
             'proveedor_id'       => [
                 'type'       => 'INT',
                 'constraint' => 11,
+                'unsigned' => true,
             ],
             "tipo_pago" => [
                 "type" => "ENUM",

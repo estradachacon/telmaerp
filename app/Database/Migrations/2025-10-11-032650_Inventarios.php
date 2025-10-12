@@ -18,6 +18,7 @@ class Inventarios extends Migration
             'productos_id'       => [
                 'type'       => 'INT',
                 'constraint' => 11,
+            'unsigned'       => true, 
             ],
             'existencias'       => [
                 'type'       => 'INT',
