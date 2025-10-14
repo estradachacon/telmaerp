@@ -12,15 +12,7 @@
                         <label for="cliente_nombre" class="form-label">Nombre del Cliente</label>
                         <input type="text" class="form-control" id="cliente_nombre" name="cliente_nombre" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="cliente_email" class="form-label">Email del Cliente</label>
-                        <input type="email" class="form-control" id="cliente_email" name="cliente_email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="cliente_telefono" class="form-label">Teléfono del Cliente</label>
-                        <input type="text" class="form-control" id="cliente_telefono" name="cliente_telefono" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarCliente()">Guardar</button>
                 </form>
             </div>
         </div>
