@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         body {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2eafc 100%);
+            background: linear-gradient(135deg, #6d7277ff 0%, #e2eafc 100%);
             min-height: 100vh;
         }
 
@@ -86,6 +86,7 @@
 
 <body>
     <?= view('partials/_session') ?> <!-- Contenido Toast -->
+
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><i class="fa-solid fa-store"></i> Carytel</a>
