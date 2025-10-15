@@ -18,48 +18,158 @@
         .navbar {
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
             background: #fff !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1050;
+            height: 56px;
         }
 
-        .navbar-brand {
+        /* Reemplaza las clases .sidebar y .content-wrapper */
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            height: calc(100vh - 56px);
+            width: 220px;
+            background: linear-gradient(135deg, #e2eafc 0%, #fff 100%);
+            border-right: 1px solid #d0e2ff;
+            box-shadow: 2px 0 16px rgba(13, 110, 253, 0.06);
+            z-index: 1040;
+            padding-top: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .sidebar.minimized {
+            width: 60px;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
             font-weight: bold;
-            font-size: 1.5rem;
-            color: #0d6efd !important;
+            color: #0d6efd;
+            text-align: center;
+            margin-bottom: 1.5rem;
             letter-spacing: 1px;
+            transition: opacity 0.2s;
         }
 
-        .navbar-nav .nav-link,
-        .navbar-nav .btn {
-            color: #495057 !important;
-            font-weight: 500;
-            margin-right: 10px;
-            transition: color 0.2s;
+        .sidebar.minimized .sidebar-title {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            overflow: hidden;
         }
 
-        .navbar-nav .nav-link.active,
-        .navbar-nav .btn.active,
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .btn:hover {
-            color: #0d6efd !important;
+        .minimize-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             background: #e7f1ff;
-            border-radius: 6px;
-        }
-
-        .navbar-toggler {
             border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #0d6efd;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.08);
+            transition: background 0.2s;
         }
 
-        .navbar-toggler-icon {
-            background-color: #0d6efd;
-            border-radius: 3px;
+        .minimize-btn:hover {
+            background: #d0e2ff;
+        }
+
+        .list-group {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        .list-group-item {
+            border: none;
+            background: transparent;
+            color: #495057;
+            font-weight: 500;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background 0.2s, color 0.2s, padding 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 18px;
+            font-size: 1.05rem;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.03);
+        }
+
+        .list-group-item.active,
+        .list-group-item:hover {
+            background: #e7f1ff;
+            color: #0d6efd;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(13, 110, 253, 0.07);
+        }
+
+        .sidebar.minimized .list-group-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+            gap: 0;
+            font-size: 1.3rem;
+        }
+
+        .sidebar-text {
+            transition: opacity 0.2s, width 0.2s;
+            white-space: nowrap;
+        }
+
+        .sidebar.minimized .sidebar-text {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
         }
 
         .content-wrapper {
-            max-width: 1100px;
-            margin: 40px auto 0 auto;
+            position: relative;
+            margin-left: 240px;
+            /* 220px del sidebar + 20px de margen */
+            margin-right: 20px;
+            /* Margen derecho igual */
+            width: calc(100% - 260px);
+            /* 100% - (margen izquierdo + margen derecho) */
+            margin-top: 76px;
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-            padding: 32px 24px;
+            padding: 32px 40px;
+            transition: all 0.3s ease;
+        }
+
+        /* Cuando el sidebar está minimizado */
+        .sidebar.minimized~.content-wrapper {
+            margin-left: 80px;
+            /* 60px del sidebar minimizado + 20px de margen */
+            margin-right: 20px;
+            /* Mantiene el mismo margen derecho */
+            width: calc(100% - 100px);
+            /* 100% - (margen izquierdo + margen derecho) */
+        }
+
+        /* Ajuste responsivo */
+        @media (max-width: 991.98px) {
+            .content-wrapper {
+                margin-left: 20px;
+                /* Sin sidebar, margen igual en ambos lados */
+                margin-right: 20px;
+                width: calc(100% - 40px);
+                margin-top: 76px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -77,7 +187,7 @@
 
             .content-wrapper {
                 padding: 16px 8px;
-                margin-top: 16px;
+                margin-top: 70px;
             }
         }
     </style>
@@ -85,6 +195,37 @@
 </head>
 
 <body>
+    <!-- Sidebar Bonito Minimizable -->
+    <div class="sidebar d-none d-lg-block" id="sidebar">
+        <button class="minimize-btn" id="minimizeSidebar" title="Minimizar/Maximizar">
+            <i class="fa-solid fa-chevron-left" id="minimizeIcon"></i>
+        </button>
+        <hr style="visibility: hidden;">
+        <div class="list-group px-3">
+                    <div class="sidebar-title"></i> Menú lateral
+        </div>
+
+            <a href="#" class="list-group-item list-group-item-action active">
+                <i class="fa-solid fa-house"></i>
+                <span class="sidebar-text">Inicio</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-gear"></i>
+                <span class="sidebar-text">Configuración</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-chart-line"></i>
+                <span class="sidebar-text">Reportes</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-user"></i>
+                <span class="sidebar-text">Perfil</span>
+            </a>
+            <!-- Agrega más opciones aquí -->
+        </div>
+    </div>
+    <!-- Fin Sidebar -->
+
     <?= view('partials/_session') ?> <!-- Contenido Toast -->
 
     <nav class="navbar navbar-expand-lg">
@@ -131,6 +272,27 @@
     <!-- Bootstrap JS con Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url('js/clientes.js') ?>"></script>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const minimizeBtn = document.getElementById('minimizeSidebar');
+        const minimizeIcon = document.getElementById('minimizeIcon');
+
+        // Asegúrate de que el ícono existe en el HTML
+        minimizeBtn.innerHTML = '<i class="fa-solid fa-chevron-left" id="minimizeIcon"></i>';
+
+        minimizeBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('minimized');
+
+            const icon = document.getElementById('minimizeIcon');
+            if (sidebar.classList.contains('minimized')) {
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            } else {
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-left');
+            }
+        });
+    </script>
 </body>
 
 </html>
