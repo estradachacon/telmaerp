@@ -1,6 +1,7 @@
 <?= $this->extend('Layouts/mainbody') ?>
 <?= $this->section('content') ?>
-<?= view('modals/cliente_new') ?> <!-- Contenido Modal -->
+<?= view('modals/clientes/cliente_new') ?> <!-- Contenido Modal -->
+<?= view('modals/clientes/cliente_edit') ?> <!-- Contenido Modal -->
 
 <div class="container col-12">
     <div class="row align-items-center mb-4">
@@ -41,12 +42,11 @@
                 <td class="text-center"><?= esc($cliente->id) ?></td>
                 <td><?= esc($cliente->cliente_nombre) ?></td>
                 <td class="text-center">
-                    <a href="#" class="btn btn-warning btn-sm">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    <a href="#" class="btn btn-danger btn-sm">
+                    <button class="btn btn-sm btn-primary" onclick="edit(<?= $cliente->id ?>)"><i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarCliente(<?= $cliente->id ?>)">
                         <i class="fa-solid fa-trash-can"></i>
-                    </a>
+                    </button>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -70,9 +70,127 @@
     }
 
     // Enviar el formulario cuando cambia
-    select.addEventListener('change', function () {
+    select.addEventListener('change', function() {
         localStorage.setItem('por_pagina_clientes', this.value);
         this.form.submit();
     });
 </script>
+
+<script>
+    function edit(id) {
+        fetch(`/clientes/edit/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Para verificar el objeto en consola
+
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                // Llenar el modal con los datos correctos
+                document.getElementById('cliente_id').value = data.id;
+                document.getElementById('cliente_nombre_edit').value = data.cliente_nombre;
+
+                // Mostrar el modal
+                var modal = new bootstrap.Modal(document.getElementById('modalEditarCliente'));
+                modal.show();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+<script>
+    document.getElementById('formEditarCliente').addEventListener('submit', function(e) {
+        e.preventDefault(); // evita que recargue la página
+
+        const id = document.getElementById('cliente_id').value;
+        const formData = new FormData(this);
+
+        fetch(`/clientes/update/${id}`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Muestra un mensaje
+                    Swal.fire({
+                        toast: true,
+                        icon: 'success',
+                        title: data.success,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+
+                    // Cierra el modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditarCliente'));
+                    modal.hide();
+
+                    // Opcional: recargar la tabla o página
+                    setTimeout(() => location.reload(), 800);
+                } else if (data.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error
+                    });
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+<script>
+function eliminarCliente(id) {
+    Swal.fire({
+        title: "¿Eliminar cliente?",
+        text: "Esta acción no se puede deshacer",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/clientes/delete/${id}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        toast: true,
+                        icon: 'success',
+                        title: data.success,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+
+                    // Elimina la fila directamente sin recargar
+                    const fila = document.querySelector(`button[onclick="eliminarCliente(${id})"]`).closest('tr');
+                    fila.remove();
+
+                } else if (data.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un problema al eliminar el cliente'
+                });
+            });
+        }
+    });
+}
+</script>
+
 <?= $this->endSection() ?>

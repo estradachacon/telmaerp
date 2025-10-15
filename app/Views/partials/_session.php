@@ -5,10 +5,9 @@
             position: 'top-end',
             icon: '<?= session()->getFlashdata('tipo') ?? 'info' ?>',
             title: '<?= session()->getFlashdata('mensaje') ?>',
-            showConfirmButton: true,
-            confirmButtonText: 'Cerrar',
-            timer: null,
-            timerProgressBar: false
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true
         });
 
     </script>
