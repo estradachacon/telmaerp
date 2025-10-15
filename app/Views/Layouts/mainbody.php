@@ -202,12 +202,20 @@
         </button>
         <hr style="visibility: hidden;">
         <div class="list-group px-3">
-                    <div class="sidebar-title"></i> Menú lateral
-        </div>
+            <div class="sidebar-title"></i> Menú lateral
+            </div>
 
             <a href="#" class="list-group-item list-group-item-action active">
                 <i class="fa-solid fa-house"></i>
                 <span class="sidebar-text">Inicio</span>
+            </a>
+            <a href="/clientes" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-users"></i>
+                <span class="sidebar-text">Clientes</span>
+            </a>
+            <a href="/encomendistas" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-users"></i>
+                <span class="sidebar-text">Clientes</span>
             </a>
             <a href="#" class="list-group-item list-group-item-action">
                 <i class="fa-solid fa-gear"></i>
@@ -252,12 +260,6 @@
                         <a class="nav-link <?= (strpos($_SERVER['REQUEST_URI'], 'compras') !== false) ? 'active' : '' ?>"
                             href="/compras">
                             <i class="fa-solid fa-cart-shopping"></i> Compras
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= (strpos($_SERVER['REQUEST_URI'], 'clientes') !== false) ? 'active' : '' ?>"
-                            href="/clientes">
-                            <i class="fa-solid fa-users"></i> Clientes
                         </a>
                     </li>
                 </ul>
