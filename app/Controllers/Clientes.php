@@ -9,10 +9,13 @@ class clientes extends BaseController
     public function index(): string
     {
         $clientesModel = new ClientesModel();
-        return view('clientes/index', [
-            'clientes' => $clientesModel->findAll(),
-            'title' => 'Listado de clientes',
-        ]);
+        
+        $porPagina = $this->request->getGet('por_pagina') ?? 10;
+        $data['clientes'] = $clientesModel->paginate(perPage: $porPagina);
+        $data['pager'] = $clientesModel->pager;
+        $data['porPagina'] = $porPagina;
+        $data['title'] = 'Listado de clientes';
+        return view('clientes/index', $data);
     }
 
     public function create()

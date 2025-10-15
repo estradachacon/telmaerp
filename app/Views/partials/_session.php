@@ -5,10 +5,12 @@
             position: 'top-end',
             icon: '<?= session()->getFlashdata('tipo') ?? 'info' ?>',
             title: '<?= session()->getFlashdata('mensaje') ?>',
-            showConfirmButton: false,
-            timer: 4000,
-            timerProgressBar: true
+            showConfirmButton: true,
+            confirmButtonText: 'Cerrar',
+            timer: null,
+            timerProgressBar: false
         });
+
     </script>
 <?php endif; ?>
 <?php if (session()->getFlashdata('validation')): ?>
